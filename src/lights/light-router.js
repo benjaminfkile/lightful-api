@@ -12,6 +12,5 @@ lightRouter
       })
       .catch(next)
   })
-
-
+  
 module.exports = lightRouter
