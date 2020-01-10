@@ -3,11 +3,11 @@ const LightService = {
     return knex.select('*').from('lights')
   },
  
-  updateLight(knex, id, newLightFields) {
-    return knex('lights')
-      .where({ id })
-      .update(newLightFields)
-  },
+  // updateLight(knex, id, newLightFields) {
+  //   return knex('lights')
+  //     .where({ id })
+  //     .update(newLightFields)
+  // },
 }
 
 module.exports = LightService
