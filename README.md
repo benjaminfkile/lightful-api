@@ -2,7 +2,7 @@
 
 This is an API that contains a collection of Christmas Lights in Misosula MT
 
-## How do set up?
+## How to set up
 
 1. Clone this repository to your local machine `git clone https://github.com/benjaminfkile/lightful-api.git`
 2. `cd` into the cloned repository
