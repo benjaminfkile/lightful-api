@@ -16,7 +16,6 @@ const service = {
     return knex.from('lights').select('*').where('id', id).first()
   },
   deleteLight(knex, id) {
-    this.deleteLightAndBulding(knex, id)
     return knex('lights')
       .where({ id })
       .delete()
