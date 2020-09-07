@@ -1,22 +1,22 @@
 const service = {
 
   getAllLights(knex) {
-    return knex.select('*').from('review')
+    return knex.select('*').from('lights')
   },
   insertLight(knex, newLight) {
     return knex
       .insert(newLight)
-      .into('review')
+      .into('lights')
       .returning('*')
       .then(rows => {
         return rows[0]
       })
   },
   getLightById(knex, id) {
-    return knex.from('review').select('*').where('id', id).first()
+    return knex.from('lights').select('*').where('id', id).first()
   },
   deleteLight(knex, id) {
-    return knex('review')
+    return knex('lights')
       .where({ id })
       .delete()
   },
