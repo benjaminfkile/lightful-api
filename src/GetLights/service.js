@@ -1,7 +1,7 @@
 const service = {
 
   getAllLights(knex) {
-    return knex.select('*').from('lights')
+    return knex.from('lights').select('lat','lng','url','upvotes','flag')
   },
   insertLight(knex, newLight) {
     return knex
@@ -16,7 +16,7 @@ const service = {
     return knex.from('lights').select('*').where('id', id).first()
   },
   deleteLight(knex, id) {
-    return knex('lights')//init deploy
+    return knex('lights')
       .where({ id })
       .delete()
   },

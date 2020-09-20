@@ -9,8 +9,8 @@ lightRouter
 .get((req, res, next) => {
   const knexInstance = req.app.get('db')
   LightService.getAllLights(knexInstance)
-    .then(Lightes => {
-      res.json(Lightes)
+    .then(Lights => {
+      res.json(Lights)
     })
     .catch(next)
 })
