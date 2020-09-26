@@ -19,6 +19,8 @@
   "author": "ben kile",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
     "chai-arrays": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",

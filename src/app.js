@@ -4,7 +4,9 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
-const lightRouter = require('./GetLights/light-router')
+const lightRouter = require('./Lights/light-router')
+const newUser = require('./Users/new-user')
+const validateUser = require('./Users/validate-user')
 
 const app = express()
 
@@ -15,6 +17,8 @@ app.use(cors())
 app.use(helmet())
 
 app.use('/api/lights', lightRouter)
+app.use('/api/users/new', newUser)
+app.use('/api/users/validate', validateUser)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
