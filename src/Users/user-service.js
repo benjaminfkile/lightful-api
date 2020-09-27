@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { use } = require('chai')
 
 const service = {
 
@@ -20,13 +21,16 @@ const service = {
     sendValidationMail(name, email, code) {
         axios({
             method: "POST",
-            url: "http://localhost:3002/send",
+            // url: "http://localhost:3002/send",
+            url: "https://intense-ocean-22155.herokuapp.com/send",
             data: {
                 name: name,
                 email: email,
                 message: "please enter this code into the field to validate your email\n" + code
             }
-        })
+        }).then(
+            // console.log(codeHash)
+        )
     }
 }
 

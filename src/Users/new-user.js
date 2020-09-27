@@ -15,36 +15,39 @@ newUserRouter
     ).then(user => {
       if (!user) {
         const { name, email, pass } = req.body
-        const code = Math.floor(Math.random() * 90000) + 10000;
-        bcrypt.hash(pass, saltRounds, function (err, hash) {
-          const newUser = { name, email, hash, code }
+        let clientCode = (Math.floor(Math.random() * 90000) + 10000);
+        let hashCode = ''
+
+        bcrypt.hash(clientCode.toString(), saltRounds, function (err, hash) {
+          hashCode += hash
+        })
+
+        bcrypt.hash(pass, saltRounds, function (err, pass) {
+          let newUser = { name, email, pass, hashCode }
+
           for (const [key, value] of Object.entries(newUser))
             if (value == null)
-              return res.status(400).json({
-                error: { message: `Missing '${key}' in request body` }
-              })
+              res.send('Missing |' + key + '| in request body')
           userService.insertUser(
             req.app.get('db'),
             newUser
-          )//hide this somehow
+          )
             .then(newUser => {
-              userService.sendValidationMail(newUser.name, newUser.email, newUser.code)
-            }).then(
-            )
+              userService.sendValidationMail(
+                newUser.name,
+                newUser.email,
+                clientCode)
+            })
+
           if (newUser) {
-            return res.status(200).json({
-              success: { message: `user added` }
-            })
+            res.status(200).send({ success: "added user" });
           } else {
-            return res.status(400).json({
-              error: { message: `failed to add user` }
-            })
+            res.status(404).send({error: "bad request body" });
           }
         });
       } else {
-        return res.status(403).json({
-          error: { message: `EMAIL ALREADY REGISTERED!` }
-        })
+        res.status(403).send({ error: "email taken" });
+
       }
     })
   })

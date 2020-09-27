@@ -14,22 +14,16 @@ validateUserRouter
       req.app.get('db'),
       req.body.email
     ).then(user => {
-      if(user){
-        bcrypt.compare(pass, user.hash, function (err, result) {
+      if (user) {
+        bcrypt.compare(pass, user.pass, function (err, result) {
           if (result) {
-            return res.status(200).json({
-              success: { message: `validated` }
-            })
+            res.status(200).send({ success: "valid password" });
           } else {
-            return res.status(403).json({
-              error: { message: `validation error` }
-            })
+            res.status(403).send({ error: "invalid password" });
           }
         });
-      }else{
-        return res.status(403).json({
-          error: { message: `user not found` }
-        })
+      } else {
+        res.send('no data')
       }
     })
   })
