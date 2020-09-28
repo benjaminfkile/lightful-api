@@ -2,7 +2,7 @@ const express = require('express')
 const userService = require('./user-service')
 const newUserRouter = express.Router()
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const saltRounds = 2;
 const jsonParser = express.json()
 
 //new user
