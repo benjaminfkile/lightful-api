@@ -8,8 +8,6 @@ const jsonParser = express.json()
 validateUserRouter
     .route('/')
     .post(jsonParser, (req, res, next) => {
-        const code = req.body.code
-        console.log(req.body)
         userService.getUserById(
             req.app.get('db'),
             req.body.email
@@ -18,6 +16,10 @@ validateUserRouter
                 bcrypt.compare(req.body.code, user.hashCode, function (err, result) {
                     if (result) {
                         res.status(200).send({ success: "valid code" });
+                        userService.toggleValid(
+                            req.app.get('db'),
+                            req.body.email
+                        )
                     } else {
                         res.status(403).send({ error: "invalide code" });
                     }

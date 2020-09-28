@@ -1,5 +1,4 @@
 const axios = require('axios')
-// const { use } = require('chai')
 
 const service = {
 
@@ -28,9 +27,15 @@ const service = {
                 email: email,
                 message: "please enter this code into the field to validate your email\n" + code
             }
-        }).then(
-            // console.log(codeHash)
-        )
+        })
+    },toggleValid(knex, email){
+        knex.select('email').from('users')
+        .where({email: email})
+        .update({ valid: '1' })
+        .then(data => console.log(data))
+
+
+
     }
 }
 

@@ -17,13 +17,14 @@ newUserRouter
         const { name, email, pass } = req.body
         let clientCode = (Math.floor(Math.random() * 90000) + 10000);
         let hashCode = ''
+        let valid = 0
 
         bcrypt.hash(clientCode.toString(), saltRounds, function (err, hash) {
           hashCode += hash
         })
 
         bcrypt.hash(pass, saltRounds, function (err, pass) {
-          let newUser = { name, email, pass, hashCode }
+          let newUser = { name, email, pass, hashCode, valid }
 
           for (const [key, value] of Object.entries(newUser))
             if (value == null)
@@ -36,7 +37,8 @@ newUserRouter
               userService.sendValidationMail(
                 newUser.name,
                 newUser.email,
-                clientCode)
+                clientCode,
+                valid)
             })
 
           if (newUser) {
