@@ -8,14 +8,14 @@ const jsonParser = express.json()
 validateUserRouter
     .route('/')
     .post(jsonParser, (req, res, next) => {
-        userService.getUserById(
+        userService.getUserByEmail(
             req.app.get('db'),
             req.body.email
         ).then(user => {
             if (user) {
-                bcrypt.compare(req.body.code, user.hashCode, function (err, result) {
+                bcrypt.compare(req.body.code, user.code, function (err, result) {
                     if (result) {
-                        res.status(200).send({ success: "valid code" });
+                        res.status(200).send({ success: "validated" });
                         userService.toggleValid(
                             req.app.get('db'),
                             req.body.email

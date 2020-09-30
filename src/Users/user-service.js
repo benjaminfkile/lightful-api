@@ -5,7 +5,7 @@ const service = {
     getAllUsers(knex) {
         return knex.from('users').select('name', 'email', 'hash')
     },
-    getUserById(knex, email) {
+    getUserByEmail(knex, email) {
         return knex.from('users').select('*').where('email', email).first()
     },
     insertUser(knex, newUser) {
@@ -20,8 +20,8 @@ const service = {
     sendValidationMail(name, email, code) {
         axios({
             method: "POST",
-            // url: "http://localhost:3002/send",
-            url: "https://intense-ocean-22155.herokuapp.com/send",
+            url: "http://localhost:3002/send",
+            // url: "https://intense-ocean-22155.herokuapp.com/send",
             data: {
                 name: name,
                 email: email,

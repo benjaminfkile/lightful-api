@@ -9,21 +9,18 @@ validateUserRouter
   .route('/')
   .post(jsonParser, (req, res, next) => {
     const pass = req.body.pass
-    console.log(req.body)
-    userService.getUserById(
-      req.app.get('db'),
-      req.body.email
-    ).then(user => {
-      if (user) {
+    userService.getUserByEmail(req.app.get('db'), req.body.email).then(user => {
+      // console.log(user)
+      if (user && user.email && (user.valid === "1")) {
         bcrypt.compare(pass, user.pass, function (err, result) {
           if (result) {
-            res.status(200).send({ success: "valid password" });
+            res.status(200).send("valid password");
           } else {
-            res.status(403).send({ error: "invalid password" });
+            res.status(403).send("invalid password");
           }
         });
       } else {
-        res.send('no data')
+        res.status(202).send('user doesnt exist')
       }
     })
   })

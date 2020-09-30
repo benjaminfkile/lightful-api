@@ -9,49 +9,30 @@ const jsonParser = express.json()
 newUserRouter
   .route('/')
   .post(jsonParser, (req, res, next) => {
-    userService.getUserById(
-      req.app.get('db'),
-      req.body.email
+    let newUser = {}
+    let valCode = ''
+    valCode += Math.floor(Math.random() * 90000) + 10000;
+    userService.getUserByEmail(req.app.get('db'), req.body.email
     ).then(user => {
-      if (!user) {
-        const { name, email, pass } = req.body
-        let clientCode = (Math.floor(Math.random() * 90000) + 10000);
-        let hashCode = ''
-        let valid = 0
-
-        bcrypt.hash(clientCode.toString(), saltRounds, function (err, hash) {
-          hashCode += hash
-        })
-
-        bcrypt.hash(pass, saltRounds, function (err, pass) {
-          let newUser = { name, email, pass, hashCode, valid }
-
-          for (const [key, value] of Object.entries(newUser))
-            if (value == null)
-              res.send('Missing |' + key + '| in request body')
-          userService.insertUser(
-            req.app.get('db'),
-            newUser
-          )
-            .then(newUser => {
-              userService.sendValidationMail(
-                newUser.name,
-                newUser.email,
-                clientCode,
-                valid)
-            })
-
-          if (newUser) {
-            res.status(200).send({ success: "added user" });
-          } else {
-            res.status(404).send({error: "bad request body" });
-          }
-        });
+      if (req.body.name && req.body.email && req.body.pass) {
+        if (!user) {
+          newUser.name = req.body.name
+          newUser.email = req.body.email
+          newUser.pass = bcrypt.hashSync(req.body.pass, saltRounds);
+          newUser.code = bcrypt.hashSync(valCode, saltRounds);
+          newUser.valid = 0
+          // console.log(newUser)
+          res.status(200).send("user added");
+          userService.insertUser(req.app.get('db'), newUser)
+          userService.sendValidationMail(newUser.name, newUser.email, valCode)
+          // console.log(valCode)
+          // console.log(newUser.code)
+        } else {
+          res.status(202).send("email taken");
+        }
       } else {
-        res.status(403).send({ error: "email taken" });
-
+        res.status(400).send("bad request")
       }
     })
   })
-
 module.exports = newUserRouter
