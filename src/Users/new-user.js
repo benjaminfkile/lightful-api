@@ -2,10 +2,9 @@ const express = require('express')
 const userService = require('./user-service')
 const newUserRouter = express.Router()
 const bcrypt = require('bcrypt');
-const saltRounds = 2;
+const saltRounds = 10;
 const jsonParser = express.json()
 
-//new user
 newUserRouter
   .route('/')
   .post(jsonParser, (req, res, next) => {
@@ -21,12 +20,10 @@ newUserRouter
           newUser.pass = bcrypt.hashSync(req.body.pass, saltRounds);
           newUser.code = bcrypt.hashSync(valCode, saltRounds);
           newUser.valid = 0
-          // console.log(newUser)
+          newUser.perms = 0
           res.status(200).send("user added");
           userService.insertUser(req.app.get('db'), newUser)
           userService.sendValidationMail(newUser.name, newUser.email, valCode)
-          // console.log(valCode)
-          // console.log(newUser.code)
         } else {
           res.status(202).send("email taken");
         }
