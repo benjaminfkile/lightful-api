@@ -2,6 +2,9 @@ const axios = require('axios')
 
 const service = {
 
+    getAllUsers(knex) {
+        return knex.from('users').select('name', 'email', 'hash')
+    },
     getUserByEmail(knex, email) {
         return knex.from('users').select('*').where('email', email).first()
     },
@@ -25,11 +28,14 @@ const service = {
                 message: "please enter this code into the field to validate your email\n" + code
             }
         })
-    }, toggleValid(knex, email) {
+    },toggleValid(knex, email){
         knex.select('email').from('users')
-            .where({ email: email })
-            .update({ valid: '1' })
-            .then(data => console.log(data))
+        .where({email: email})
+        .update({ valid: '1' })
+        .then(data => console.log(data))
+
+
+
     }
 }
 

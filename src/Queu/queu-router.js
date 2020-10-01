@@ -1,22 +1,22 @@
 const express = require('express')
-const LightService = require('./light-service')
-const lightRouter = express.Router()
+const queuService = require('./queu-service')
+const queuRouter = express.Router()
 const jsonParser = express.json()
 
 
-lightRouter
+queuRouter
   .route('/')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
-    LightService.getAllLights(knexInstance)
+    queuService.getAllLights(knexInstance)
       .then(Lights => {
         res.json(Lights)
       })
       .catch(next)
   })
   .post(jsonParser, (req, res, next) => {
-    const { lat, lng, url, id, email } = req.body
-    const newLight = { lat, lng, url, id, email }
+    const { lat, lng, url, id, email, del } = req.body
+    const newLight = { lat, lng, url, id, email, del }
 
     for (const [key, value] of Object.entries(newLight))
       if (value == null)
@@ -24,7 +24,7 @@ lightRouter
           error: { message: `Missing '${key}' in request body` }
         })
 
-    LightService.insertLight(
+    queuService.insertLight(
       req.app.get('db'),
       newLight
     )
@@ -35,10 +35,10 @@ lightRouter
   })
 /********************************************************************************/
 
-lightRouter
+queuRouter
   .route('/:id')
   .all((req, res, next) => {
-    LightService.getLightById(
+    queuService.getLightById(
       req.app.get('db'),
       req.params.id
     )
@@ -57,7 +57,7 @@ lightRouter
     res.json(res.Light)
   })
   .delete((req, res, next) => {
-    LightService.deleteLight(
+    queuService.deleteLight(
       req.app.get('db'),
       req.params.id
     )
@@ -67,4 +67,4 @@ lightRouter
       .catch(next)
   })
 
-module.exports = lightRouter
+module.exports = queuRouter

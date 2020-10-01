@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jsonParser = express.json()
 
+//new user
 newUserRouter
   .route('/')
   .post(jsonParser, (req, res, next) => {
@@ -20,7 +21,6 @@ newUserRouter
           newUser.pass = bcrypt.hashSync(req.body.pass, saltRounds);
           newUser.code = bcrypt.hashSync(valCode, saltRounds);
           newUser.valid = 0
-          newUser.perms = 0
           res.status(200).send("user added");
           userService.insertUser(req.app.get('db'), newUser)
           userService.sendValidationMail(newUser.name, newUser.email, valCode)
