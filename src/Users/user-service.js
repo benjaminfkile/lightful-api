@@ -3,6 +3,7 @@ const axios = require('axios')
 const service = {
 
     getAllUsers(knex) {
+        //fix this
         return knex.from('users').select('name', 'email', 'hash')
     },
     getUserByEmail(knex, email) {

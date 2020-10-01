@@ -16,7 +16,7 @@ lightRouter
   })
   .post(jsonParser, (req, res, next) => {
     const { lat, lng, url, id, email } = req.body
-    const newLight = { lat, lng, url, id, email }
+    const newLight = { lat, lng, url, id }
 
     for (const [key, value] of Object.entries(newLight))
       if (value == null)
