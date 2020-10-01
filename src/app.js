@@ -24,7 +24,7 @@ app.use('/api/lights', lightRouter)
 app.use('/api/users/new', newUser)
 app.use('/api/users/validate', validateUser)
 app.use('/api/users/valCode', validateCode)
-app.use('/api/users', getUser)
+app.use('/api/users/', getUser)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
