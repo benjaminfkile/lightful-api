@@ -4,6 +4,8 @@ const lightRouter = express.Router()
 const jsonParser = express.json()
 
 
+
+
 lightRouter
   .route('/')
   .get((req, res, next) => {
@@ -15,8 +17,8 @@ lightRouter
       .catch(next)
   })
   .post(jsonParser, (req, res, next) => {
-    const { lat, lng, url, id, email } = req.body
-    const newLight = { lat, lng, url, id }
+    const { lat, lng, url, id, upvotes } = req.body
+    const newLight = { lat, lng, url, id, upvotes }
 
     for (const [key, value] of Object.entries(newLight))
       if (value == null)
@@ -66,5 +68,6 @@ lightRouter
       })
       .catch(next)
   })
+
 
 module.exports = lightRouter

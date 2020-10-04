@@ -9,6 +9,9 @@ const service = {
     getUserByEmail(knex, email) {
         return knex.from('users').select('*').where('email', email).first()
     },
+    getUserById(knex, id) {
+        return knex.from('users').select('*').where('id', id).first()
+    },
     insertUser(knex, newUser) {
         return knex
             .insert(newUser)
@@ -34,9 +37,6 @@ const service = {
         .where({email: email})
         .update({ valid: '1' })
         .then(data => console.log(data))
-
-
-
     }
 }
 

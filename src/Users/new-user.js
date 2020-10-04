@@ -2,6 +2,7 @@ const express = require('express')
 const userService = require('./user-service')
 const newUserRouter = express.Router()
 const bcrypt = require('bcrypt');
+const { uuid } = require('uuidv4');
 const saltRounds = 10;
 const jsonParser = express.json()
 
@@ -12,8 +13,8 @@ newUserRouter
     let newUser = {}
     let valCode = ''
     valCode += Math.floor(Math.random() * 90000) + 10000;
-    userService.getUserByEmail(req.app.get('db'), req.body.email
-    ).then(user => {
+    userService.getUserByEmail(req.app.get('db'), req.body.email)
+    .then(user => {
       if (req.body.name && req.body.email && req.body.pass) {
         if (!user) {
           newUser.name = req.body.name
@@ -22,6 +23,7 @@ newUserRouter
           newUser.code = bcrypt.hashSync(valCode, saltRounds);
           newUser.valid = 0
           newUser.perms = 0
+          newUser.id = uuid()
           res.status(200).send("user added");
           userService.insertUser(req.app.get('db'), newUser)
           userService.sendValidationMail(newUser.name, newUser.email, valCode)

@@ -1,7 +1,7 @@
 const service = {
 
   getAllLights(knex) {
-    return knex.from('lights').select('lat', 'lng', 'url', 'id')
+    return knex.from('lights').select('lat', 'lng', 'url', 'id','upvotes')
   },
   insertLight(knex, newLight) {
     return knex
