@@ -20,7 +20,7 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
 app.use(cors())
 app.use(helmet())
 
-app.use('/api/queu', queuRouter)
+app.use('/api/queu', queuRouter)//wtf
 app.use('/api/lights', lightRouter)
 app.use('/api/upvote', upvoteRouter)
 app.use('/api/users/new', newUser)
