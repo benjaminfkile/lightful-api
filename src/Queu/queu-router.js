@@ -6,7 +6,7 @@ const jsonParser = express.json()
 
 queuRouter
   .route('/')
-  .get((req, res, next) => {
+  .get(jsonParser, (req, res, next) => {
     const knexInstance = req.app.get('db')
     queuService.getAllLights(knexInstance)
       .then(Lights => {
@@ -15,8 +15,8 @@ queuRouter
       .catch(next)
   })
   .post(jsonParser, (req, res, next) => {
-    const { lat, lng, url, id, email, del } = req.body
-    const newLight = { lat, lng, url, id, email, del }
+    const { lat, lng, url, id, userId, del } = req.body
+    const newLight = { lat, lng, url, id, userId, del }
 
     for (const [key, value] of Object.entries(newLight))
       if (value == null)
