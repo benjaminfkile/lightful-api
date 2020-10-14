@@ -25,7 +25,7 @@ lightRouter
       if (!decision.denied) {
         axios.post("https://api.imgbb.com/1/upload?key=eeadc880da3384d7927fb106962183a2&name=" + crypto.randomBytes(16).toString("hex") + "&image=" + newLight.url, {})
           .then(res => {
-            console.log(res)
+            // console.log(res)
             newLight.url = res.data.data.display_url
             newLight.del = res.data.data.delete_url
             LightService.insertLight(req.app.get('db'), newLight)
