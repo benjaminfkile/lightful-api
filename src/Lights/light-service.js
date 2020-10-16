@@ -103,7 +103,7 @@ const service = {
       decision.text3 = "Found links",
         decision.denied = true
     }
-    if (result.offensive.prob > .01) {
+    if (result.offensive.prob > .1) {
       decision.offensive = "Found offensive material",
         decision.denied = true
     }
