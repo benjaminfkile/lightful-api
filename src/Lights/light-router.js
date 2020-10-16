@@ -39,9 +39,9 @@ lightRouter
                   })
                 });
             }
+            LightService.sendDecisionMail(knexInstance, newLight.user, decision)
             console.log(decision)
           }).catch(next)
-          LightService.sendDecisionMail(knexInstance, newLight.user, decision)
         } else {
           return res.status(403).json({
             error: { message: 'unregistered user' }
