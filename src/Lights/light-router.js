@@ -41,7 +41,6 @@ lightRouter
             }
             console.log(decision)
           }).catch(next)
-          let decision = LightService.auditLight()
           LightService.sendDecisionMail(knexInstance, newLight.user, decision)
         } else {
           return res.status(403).json({
