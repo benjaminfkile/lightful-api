@@ -29,6 +29,7 @@ const service = {
 
     // console.log(user)
     // console.log(decision)
+    console.log('wtf')
     let message = ''
     knex.select('name').from('users').where('id', id).then(user => {
       if (!decision.denied) {
