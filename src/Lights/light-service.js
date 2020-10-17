@@ -26,18 +26,13 @@ const service = {
     .delete()
   },
   sendDecisionMail(knex, id, decision) {
-
-    // console.log(user)
-    // console.log(decision)
-    console.log('wtf')
     let message = ''
     knex.select('name').from('users').where('id', id).then(user => {
       if (!decision.denied) {
-        message += 'Congratulations! ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ' your image passed review!!!\n\n  You should be able to see it on Lightmaps as soon as you come back to the site or refresh the page\n Thank you for your contribution!!!\n\nbest, Ben'
+        message += 'Congratulations ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + '!\n\nYour image passed review!!!\n\nYou should be able to see it on Lightmaps as soon as you come back to the site or refresh the page.\nThank you for your contribution!!!\n\nbest,\n\nBen @Lightmaps'
       } else {
-        message += 'Sorry ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ', your image did not pass review :(\nHere is why:'
+        message += 'Sorry ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ', your image did not pass review.\nHere is why:'
         for (const property in decision) {
-          // console.log(decision)
           if (decision[property] !== false && decision[property] !== true) {
             message += '\n*' + decision[property] + '.'
           }
@@ -46,8 +41,8 @@ const service = {
       knex.select('email').from('users').where('id', id).then(email => {
         axios({
           method: "POST",
-          // url: "http://localhost:3002/send",
-          url: "https://intense-ocean-22155.herokuapp.com/send",
+          // url: "http://localhost:3002/send/decision",
+          url: "https://intense-ocean-22155.herokuapp.com/send/decision",
           data: {
             name: user,
             email: email[0].email,
@@ -110,6 +105,7 @@ const service = {
     // decision.denied = true
     // decision.colors = "Photo is too bright, make sure you are taking your photo in low light"
     // decision.text0 = "Found artificial text"
+    // console.log(result)
 
     return decision
   }

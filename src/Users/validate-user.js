@@ -10,7 +10,6 @@ validateUserRouter
   .post(jsonParser, (req, res, next) => {
     const pass = req.body.pass
     userService.getUserByEmail(req.app.get('db'), req.body.email).then(user => {
-      // console.log(user)
       if (user && user.email && (user.valid === "1")) {
         bcrypt.compare(pass, user.pass, function (err, result) {
           if (result) {

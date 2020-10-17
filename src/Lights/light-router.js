@@ -2,7 +2,6 @@ const express = require('express')
 const axios = require('axios').default;
 const crypto = require("crypto");
 const LightService = require('./light-service');
-const Knex = require('knex');
 const lightRouter = express.Router()
 const sightengine = require('sightengine')('656105033', 'ELQmQagYWZyvoBkovEJ3');
 const jsonParser = express.json()
@@ -40,7 +39,7 @@ lightRouter
                 });
             }
             LightService.sendDecisionMail(knexInstance, newLight.user, decision)
-            console.log(decision)
+            // console.log(decision)
           }).catch(next)
         } else {
           return res.status(403).json({

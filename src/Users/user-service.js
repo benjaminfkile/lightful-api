@@ -24,8 +24,8 @@ const service = {
     sendValidationMail(name, email, code) {
         axios({
             method: "POST",
-            // url: "http://localhost:3002/send",
-            url: "https://intense-ocean-22155.herokuapp.com/send",
+            // url: "http://localhost:3002/send/validation",
+            url: "https://intense-ocean-22155.herokuapp.com/send/validation",
             data: {
                 name: name,
                 email: email,
