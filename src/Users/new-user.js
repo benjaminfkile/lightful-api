@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jsonParser = express.json()
 
-//new user
 newUserRouter
   .route('/')
   .post(jsonParser, (req, res, next) => {

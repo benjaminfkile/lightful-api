@@ -7,10 +7,7 @@ getUserRouter
   .route('/:id')
   .get((req, res, next) => {
     const userInfo = {}
-    userService.getUserByEmail(
-      req.app.get('db'),
-      req.params.id
-    )
+    userService.getUserByEmail(req.app.get('db'), req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).json({
