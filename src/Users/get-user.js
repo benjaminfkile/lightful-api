@@ -1,17 +1,17 @@
 const express = require('express')
 const userService = require('./user-service')
 const getUserRouter = express.Router()
-const fuck = {}
 
 getUserRouter
   .route('/:id')
   .get((req, res, next) => {
+    const knexInstance = req.app.get('db')
     const userInfo = {}
-    userService.getUserByEmail(req.app.get('db'), req.params.id)
+    userService.getUserByEmail(knexInstance, req.params.id)
       .then(user => {
         if (!user) {
           return res.status(404).json({
-            error: { message: `user doesn't exist` }
+            error: { message: 'user does not exist' }
           })
         } else {
           userInfo.name = user.name

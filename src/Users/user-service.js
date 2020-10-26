@@ -23,20 +23,22 @@ const service = {
     },
     sendValidationMail(name, email, code) {
         axios({
-            method: "POST",
-            // url: "http://localhost:3002/send/validation",
-            url: "https://intense-ocean-22155.herokuapp.com/send/validation",
+            method: 'POST',
+            // url: 'http://localhost:3002/send/validation',
+            url: 'https://intense-ocean-22155.herokuapp.com/send/validation',
             data: {
                 name: name,
                 email: email,
-                message: "please enter this code into the field to validate your email\n" + code
+                message: 'please enter this code into the field to validate your email\n' + code
             }
         })
     },toggleValid(knex, email){
         knex.select('email').from('users')
         .where({email: email})
         .update({ valid: '1' })
-        .then(data => console.log(data))
+        .then(rows => {
+            return rows[0]
+        })
     }
 }
 

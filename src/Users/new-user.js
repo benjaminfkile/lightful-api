@@ -12,7 +12,8 @@ newUserRouter
     let newUser = {}
     let valCode = ''
     valCode += Math.floor(Math.random() * 90000) + 10000;
-    userService.getUserByEmail(req.app.get('db'), req.body.email)
+    const knexInstance = req.app.get('db')
+    userService.getUserByEmail(knexInstance, req.body.email)
     .then(user => {
       if (req.body.name && req.body.email && req.body.pass) {
         if (!user) {
@@ -22,15 +23,15 @@ newUserRouter
           newUser.code = bcrypt.hashSync(valCode, saltRounds);
           newUser.valid = 0
           newUser.perms = 0
-          newUser.id = crypto.randomBytes(16).toString("hex");
-          res.status(200).send("user added");
-          userService.insertUser(req.app.get('db'), newUser)
+          newUser.id = crypto.randomBytes(16).toString('hex');
+          res.status(200).send('user added');
+          userService.insertUser(knexInstance, newUser)
           userService.sendValidationMail(newUser.name, newUser.email, valCode)
         } else {
-          res.status(202).send("email taken");
+          res.status(202).send('email taken');
         }
       } else {
-        res.status(400).send("bad request")
+        res.status(404).send('bad request')
       }
     })
   })

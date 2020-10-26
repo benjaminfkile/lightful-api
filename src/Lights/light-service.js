@@ -3,10 +3,13 @@ const axios = require('axios')
 const service = {
 
   getAllLights(knex) {
-    return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes')
+    return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes', 'on')
   },
   getLightById(knex, id) {
     return knex.from('lights').select('*').where('id', id).first()
+  },
+  getLightsByContributor(knex, user) {
+    return knex.from('lights').select('*').where('user', user)
   },
   isUser(knex, id) {
     return knex.select('valid').from('users').where('id', id)
@@ -20,10 +23,24 @@ const service = {
         return rows[0]
       })
   },
-  deleteLight(knex, id){
-    return knex('lights')
-    .where({ id })
+  toggleOn(knex, id, toggle) {
+    knex.select('id').from('lights')
+      .where({ id: id })
+      .update({
+        on: toggle
+      })
+      .then(rows => {
+        return rows[0]
+      })
+
+  },
+  deleteLight(knex, id) {
+    knex.select('id').from('lights')
+    .where({id})
     .delete()
+    .then(rows => {
+      return rows[0]
+    })
   },
   sendDecisionMail(knex, id, decision) {
     let message = ''
@@ -40,9 +57,9 @@ const service = {
       }
       knex.select('email').from('users').where('id', id).then(email => {
         axios({
-          method: "POST",
-          // url: "http://localhost:3002/send/decision",
-          url: "https://intense-ocean-22155.herokuapp.com/send/decision",
+          method: 'POST',
+          // url: 'http://localhost:3002/send/decision',
+          url: 'https://intense-ocean-22155.herokuapp.com/send/decision',
           data: {
             name: user,
             email: email[0].email,
@@ -55,58 +72,53 @@ const service = {
   auditLight(result) {
     let decision = { denied: false }
     if (result.weapon > .01) {
-      decision.weapon = "Found weapon",
+      decision.weapon = 'Found weapon',
         decision.denied = true
     }
     if (result.alcohol > .01) {
-      decision.alcohol = "Found alcohol",
+      decision.alcohol = 'Found alcohol',
         decision.denied = true
     }
     if (result.drugs > .01) {
-      decision.drugs = "Found drugs",
+      decision.drugs = 'Found drugs',
         decision.denied = true
     }
     if (result.nudity.raw > .01) {
-      decision.nudity1 = "Found nudity",
+      decision.nudity1 = 'Found nudity',
         decision.denied = true
     }
     if (result.nudity.partial > .01) {
-      decision.nudity2 = "Found nudity",
+      decision.nudity2 = 'Found nudity',
         decision.denied = true
     }
     if (result.faces.length > 0) {
-      decision.faces = "Found human faces",
+      decision.faces = 'Found human faces',
         decision.denied = true
     }
     // if (result.colors.dominant.r > 60 || result.colors.dominant.g > 60 || result.colors.dominant.b > 60) {
-    //   decision.colors = "Photo is too bright, make sure you are taking your photo in low light",
+    //   decision.colors = 'Photo is too bright, make sure you are taking your photo in low light',
     //     decision.denied = true
     // }
     if (result.text.has_artificial > .01) {
-      decision.text0 = "Found artificial text",
+      decision.text0 = 'Found artificial text',
         decision.denied = true
     }
     if (result.text.profanity.length > .0) {
-      decision.text1 = "Found profane text",
+      decision.text1 = 'Found profane text',
         decision.denied = true
     }
     if (result.text.personal.length > 0) {
-      decision.text2 = "Found personal text",
+      decision.text2 = 'Found personal text',
         decision.denied = true
     }
     if (result.text.link.length > 0) {
-      decision.text3 = "Found links",
+      decision.text3 = 'Found links',
         decision.denied = true
     }
     if (result.offensive.prob > .1) {
-      decision.offensive = "Found offensive material",
+      decision.offensive = 'Found offensive material',
         decision.denied = true
     }
-    // decision.denied = true
-    // decision.colors = "Photo is too bright, make sure you are taking your photo in low light"
-    // decision.text0 = "Found artificial text"
-    // console.log(result)
-
     return decision
   }
 }

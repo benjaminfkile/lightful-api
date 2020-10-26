@@ -7,19 +7,20 @@ const jsonParser = express.json()
 validateUserRouter
     .route('/')
     .post(jsonParser, (req, res, next) => {
-        userService.getUserByEmail(req.app.get('db'), req.body.email
+        const knexInstance = req.app.get('db')
+        userService.getUserByEmail(knexInstance, req.body.email
         ).then(user => {
             if (user) {
                 bcrypt.compare(req.body.code, user.code, function (err, result) {
                     if (result) {
-                        res.status(200).send({ success: "validated" });
-                        userService.toggleValid(req.app.get('db'), req.body.email)
+                        res.status(200).send({ success: 'validated' });
+                        userService.toggleValid(knexInstance, req.body.email)
                     } else {
-                        res.status(403).send({ error: "invalide code" });
+                        res.status(403).send({ error: 'invalid code' });
                     }
                 });
             } else {
-                res.status(400).send({ error: "bad request" });
+                res.status(404).send({ error: 'bad request' });
             }
         })
     })

@@ -1,17 +1,18 @@
 const express = require('express')
-const upvoteService = require('./upvote-service')
+const upvoteService = require('./stat-service')
 const lightService = require('../Lights/light-service')
 const userService = require('../Users/user-service')
-const likeRouter = express.Router()
+const statRouter = express.Router()
 const jsonParser = express.json()
 
-likeRouter
-  .route('/')
+statRouter
+  .route('/upvote/')
   .post(jsonParser, (req, res, next) => {
-    userService.getUserById(req.app.get('db'), req.body.userId)
+    const knexInstance = req.app.get('db')
+    userService.getUserById(knexInstance, req.body.userId)
       .then(user => {
         if (user && user.valid === '1') {
-          lightService.getLightById(req.app.get('db'), req.body.id)
+          lightService.getLightById(knexInstance, req.body.id)
             .then(light => {
               if (light) {
                 let likes = 0
@@ -21,26 +22,34 @@ likeRouter
                   }
                 }
                 if (likes < 1) {
-                  upvoteService.castVote(req.app.get('db'), req.body.id, req.body.userId)
+                  upvoteService.castVote(knexInstance, req.body.id, req.body.userId)
                   return res.status(200).json({
-                    success: { message: `vote cast` }
+                    success: { message: 'vote cast' }
                   })
                 } else {
-                  return res.status(403).json({
-                    error: { message: `already liked` }
+                  return res.status(200).json({
+                    error: { message: 'already liked' }
                   })
                 }
               } else {
-                return res.status(400).json({
-                  error: { message: `bad request` }
+                return res.status(404).json({
+                  error: { message: 'not found' }
                 })
               }
             })
         } else {
           return res.status(403).json({
-            error: { message: `user not validated` }
+            error: { message: 'user not validated' }
           })
         }
       })
   })
-module.exports = likeRouter
+
+  statRouter
+  .route('/trip/')
+  .post(jsonParser, (req, res, next) => {
+    const knexInstance = req.app.get('db')
+    upvoteService.castTrip(knexInstance, req.body.id, req.body.ip)
+  })
+  
+module.exports = statRouter
