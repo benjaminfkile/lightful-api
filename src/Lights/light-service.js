@@ -95,10 +95,10 @@ const service = {
       decision.faces = 'Found human faces',
         decision.denied = true
     }
-    // if (result.colors.dominant.r > 60 || result.colors.dominant.g > 60 || result.colors.dominant.b > 60) {
-    //   decision.colors = 'Photo is too bright, make sure you are taking your photo in low light',
-    //     decision.denied = true
-    // }
+    if (result.colors.dominant.r > 60 || result.colors.dominant.g > 60 || result.colors.dominant.b > 60) {
+      decision.colors = 'Photo is too bright, make sure you are taking your photo in low light',
+        decision.denied = true
+    }
     if (result.text.has_artificial > .01) {
       decision.text0 = 'Found artificial text',
         decision.denied = true
