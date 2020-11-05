@@ -170,8 +170,8 @@ const service = {
     //     console.log('\n' + key + ': ' + decision[key]);
     //   }
     // }
-    console.log(result)
-    console.log(decision)
+    // console.log(result)
+    // console.log(decision)
     return decision
   }
 }
