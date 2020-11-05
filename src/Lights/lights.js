@@ -3,7 +3,7 @@ const axios = require('axios').default;
 const crypto = require("crypto");
 const LightService = require('./light-service');
 const lightRouter = express.Router()
-const sightengine = require('sightengine')('656105033', 'ELQmQagYWZyvoBkovEJ3');
+var sightengine = require('sightengine')('477213476','YzZjWWct2aB8jdtKh82C');
 const jsonParser = express.json()
 
 lightRouter
@@ -16,7 +16,7 @@ lightRouter
       })
       .catch(next)
   })
-  .post(jsonParser, (req, res, next) => {
+  .post(jsonParser, async (req, res, next) => {
     const knexInstance = req.app.get('db')
     const { lat, lng, url, id, user, del, upvotes, trips, uploaded, on } = req.body
     let newLight = { lat, lng, url, id, user, del, upvotes, trips, uploaded, on }

@@ -36,11 +36,11 @@ const service = {
   },
   deleteLight(knex, id) {
     knex.select('id').from('lights')
-    .where({id})
-    .delete()
-    .then(rows => {
-      return rows[0]
-    })
+      .where({ id })
+      .delete()
+      .then(rows => {
+        return rows[0]
+      })
   },
   sendDecisionMail(knex, id, decision) {
     let message = ''
@@ -95,8 +95,36 @@ const service = {
       decision.faces = 'Found human faces',
         decision.denied = true
     }
-    if (result.colors.dominant.r > 60 || result.colors.dominant.g > 60 || result.colors.dominant.b > 60) {
-      decision.colors = 'Photo is too bright, make sure you are taking your photo in low light',
+    if (result.colors.dominant.r > 210 || result.colors.dominant.g > 210 || result.colors.dominant.b > 210) {
+      decision.domColors = 'Dominate color in the photo is too bright (r,b or g value > 210',
+        decision.denied = true
+    }
+    if (result.colors.accent && result.colors.accent.length < 2) {
+      decision.noAccentColors = 'Photo contains less than 2 Accent colors',
+        decision.denied = true
+    }
+    if (result.colors.accent && result.colors.accent.length > 1) {
+      for (let i = 0; i < result.colors.accent.length; i++) {
+        if ((result.colors.accent[i].r || result.colors.accent[i].g || result.colors.accent[i].b) > 210) {
+          decision.accentTooBright = 'An Accent color in the photo is too bright (r,b or g value > 210'
+          decision.denied = true
+        }
+      }
+    }
+    if (result.colors.other && result.colors.other.length < 3) {
+      decision.noOtherColors = 'Photo contains less than 3 other colors',
+        decision.denied = true
+    }
+    if (result.colors.other && result.colors.other.length > 1) {
+      for (let i = 0; i < result.colors.other.length; i++) {
+        if ((result.colors.other[i].r || result.colors.other[i].g || result.colors.other[i].b) > 210) {
+          decision.otherTooBright = 'A color in the photo is too bright (r,b or g value > 210'
+          decision.denied = true
+        }
+      }
+    }
+    if (!result.colors.accent || !result.colors.other) {
+      decision.noAccentOtherColors = 'Photo contains less than 2 Accent colors or Other colors',
         decision.denied = true
     }
     if (result.text.has_artificial > .01) {
@@ -116,9 +144,34 @@ const service = {
         decision.denied = true
     }
     if (result.offensive.prob > .1) {
-      decision.offensive = 'Found offensive material',
+      if (result.offensive.boxes[0].label !== 'confederate') {
+        decision.offensive = 'Found offensive material realting to: ' + result.offensive.boxes[0].label
         decision.denied = true
+      }
     }
+    // console.log('\nBrightness:')
+    // console.log(result.brightness)
+    // console.log('\nContrast:')
+    // console.log(result.contrast)
+    // console.log('\nSharpness:')
+    // console.log(result.sharpness)
+    // console.log('\nDominant:')
+    // console.log(result.colors.dominant)
+    // if(result.colors.accent){
+    //   console.log('\nAccents:')
+    //   console.log(result.colors.accent)
+    // }
+    // if(result.colors.other){
+    //   console.log('\nOther:')
+    //   console.log(result.colors.other)
+    // }
+    // for (var key in decision) {
+    //   if (decision.hasOwnProperty(key)) {
+    //     console.log('\n' + key + ': ' + decision[key]);
+    //   }
+    // }
+    console.log(result)
+    console.log(decision)
     return decision
   }
 }
