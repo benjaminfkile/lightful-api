@@ -3,7 +3,7 @@ const axios = require('axios')
 const service = {
 
   getAllLights(knex) {
-    return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes', 'on').where('zone', '13')
+    return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes', 'on').where('zone', '9')
   },
   getLightById(knex, id) {
     return knex.from('lights').select('*').where('id', id).first()
