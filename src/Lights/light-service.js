@@ -104,7 +104,7 @@ const service = {
         decision.denied = true
     }
     if (result.colors.dominant.r > 210 || result.colors.dominant.g > 210 || result.colors.dominant.b > 210) {
-      decision.domColors = 'Dominate color in the photo is too bright (r,b or g value > 210',
+      decision.domColors = 'Dominate color in the photo is too bright (r,b or g value > 210)',
         decision.denied = true
     }
     if (result.colors.accent && result.colors.accent.length < 2) {
@@ -114,7 +114,7 @@ const service = {
     if (result.colors.accent && result.colors.accent.length > 1) {
       for (let i = 0; i < result.colors.accent.length; i++) {
         if ((result.colors.accent[i].r || result.colors.accent[i].g || result.colors.accent[i].b) > 210) {
-          decision.accentTooBright = 'An Accent color in the photo is too bright (r,b or g value > 210'
+          decision.accentTooBright = 'An Accent color in the photo is too bright (r,b or g value > 210)'
           decision.denied = true
         }
       }
@@ -126,7 +126,7 @@ const service = {
     if (result.colors.other && result.colors.other.length > 1) {
       for (let i = 0; i < result.colors.other.length; i++) {
         if ((result.colors.other[i].r || result.colors.other[i].g || result.colors.other[i].b) > 210) {
-          decision.otherTooBright = 'A color in the photo is too bright (r,b or g value > 210'
+          decision.otherTooBright = 'A color in the photo is too bright (r,b or g value > 210)'
           decision.denied = true
         }
       }
