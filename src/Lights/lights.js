@@ -7,10 +7,12 @@ var sightengine = require('sightengine')('477213476','YzZjWWct2aB8jdtKh82C');
 const jsonParser = express.json()
 
 lightRouter
-  .route('/')
+  .route('/:coords')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
-    LightService.getAllLights(knexInstance)
+    const coords = req.params.coords.split(',')
+    console.log(coords)
+    LightService.getAllLights(knexInstance, coords)
       .then(Lights => {
         res.json(Lights)
       })
