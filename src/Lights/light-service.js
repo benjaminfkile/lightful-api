@@ -3,15 +3,16 @@ const axios = require('axios')
 const service = {
 
   getAllLights(knex, coords) {
-    latMax = parseFloat(coords[0]) + 3 + ""
-    latMin = parseFloat(coords[0]) - 3 + ""
-    lngMax = parseFloat(coords[1]) + 3 + ""
-    lngMin = parseFloat(coords[1]) - 3 + ""
+    latMax = parseFloat(coords[0]) + parseInt(coords[2])
+    latMin = parseFloat(coords[0]) - parseInt(coords[2])
+    lngMax = parseFloat(coords[1]) + parseInt(coords[2])
+    lngMin = parseFloat(coords[1]) - parseInt(coords[2])
+    console.log(coords[2])
     return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes', 'on')
-    .where('lat', '>', latMin)
-    .where('lat', '<', latMax)
-    .where('lng', '<', lngMin)
-    .where('lng', '>', lngMax)
+      .where('lat', '>', latMin)
+      .where('lat', '<', latMax)
+      .where('lng', '<', lngMin)
+      .where('lng', '>', lngMax)
   },
   getLightById(knex, id) {
     return knex.from('lights').select('*').where('id', id).first()
