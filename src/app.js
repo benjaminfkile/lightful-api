@@ -10,6 +10,7 @@ const newUser = require('./Users/new-user')
 const getUser = require('./Users/get-user')
 const validateUser = require('./Users/validate-user')
 const validateCode = require('./Users/validate-code')
+const places = require('./Places/places')
 const app = express()
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
@@ -26,6 +27,7 @@ app.use('/api/users/new', newUser)
 app.use('/api/users/validate', validateUser)
 app.use('/api/users/valCode', validateCode)
 app.use('/api/users', getUser)
+app.use('/api/places' ,places)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
