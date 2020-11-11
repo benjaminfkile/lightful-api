@@ -32,13 +32,52 @@ const service = {
                 message: 'please enter this code into the field to validate your email\n' + code
             }
         })
-    },toggleValid(knex, email){
-        knex.select('email').from('users')
-        .where({email: email})
-        .update({ valid: '1' })
+
+    },
+    sendResetMail(name, email, code) {
+        axios({
+            method: 'POST',
+            // url: 'http://localhost:3002/send/validation',
+            url: 'https://intense-ocean-22155.herokuapp.com/send/validation',
+            data: {
+                name: name,
+                email: email,
+                message: 'please enter this code into the field to reset your password\n' + code
+            }
+        })
+
+    },
+    changePass(knex, email, pass){
+        knex.select('pass').from('users')
+        .where({ email: email })
+        .update({ pass: pass })
         .then(rows => {
             return rows[0]
         })
+    },
+    changeCode(knex, id, code) {
+        knex.select('id').from('users')
+            .where({ id: id })
+            .update({ code: code })
+            .then(rows => {
+                return rows[0]
+            })
+    },
+    toggleValid(knex, email) {
+        knex.select('email').from('users')
+            .where({ email: email })
+            .update({ valid: '1' })
+            .then(rows => {
+                return rows[0]
+            })
+    },
+    toggleInvalid(knex, email) {
+        knex.select('email').from('users')
+            .where({ email: email })
+            .update({ valid: '0' })
+            .then(rows => {
+                return rows[0]
+            })
     }
 }
 

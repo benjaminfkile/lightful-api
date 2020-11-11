@@ -11,7 +11,6 @@ lightRouter
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
     const coords = req.params.coords.split(',')
-    console.log(coords)
     LightService.getAllLights(knexInstance, coords)
       .then(Lights => {
         res.json(Lights)
