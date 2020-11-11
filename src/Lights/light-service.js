@@ -20,7 +20,7 @@ const service = {
     return knex.from('lights').select('*').where('user', user)
   },
   isUser(knex, id) {
-    return knex.select('valid').from('users').where('id', id)
+    return knex.select('valid', 'pass').from('users').where('id', id)
   },
   insertLight(knex, newLight) {
     return knex

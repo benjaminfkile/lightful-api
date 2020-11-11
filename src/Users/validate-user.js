@@ -12,7 +12,7 @@ validateUserRouter
     const pass = req.body.pass
     const knexInstance = req.app.get('db')
     userService.getUserByEmail(knexInstance, req.body.email).then(user => {
-      if (user && user.email && (user.valid === '1')) {
+      if (user && user.email && (user.valid === 't')) {
         bcrypt.compare(pass, user.pass, function (err, result) {
           if (result) {
             res.status(200).send('valid password');
@@ -32,7 +32,7 @@ validateUserRouter
     const pass = req.body.pass
     const knexInstance = req.app.get('db')
     userService.getUserById(knexInstance, req.body.user).then(user => {
-      if (user && user.email && (user.valid === '1')) {
+      if (user && user.email && (user.valid === 't')) {
         bcrypt.compare(pass, user.pass, function (err, result) {
           if (result) {
             res.status(200).send('valid password');
@@ -58,7 +58,7 @@ validateUserRouter
     const pass = req.body.pass
     const knexInstance = req.app.get('db')
     userService.getUserById(knexInstance, req.body.user).then(user => {
-      if (user && user.email && (user.valid === "1")) {
+      if (user && user.email && (user.valid === "t")) {
         bcrypt.compare(pass, user.pass, function (err, result) {
           if (result) {
             res.status(200).send('deleted light');

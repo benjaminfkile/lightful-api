@@ -58,7 +58,7 @@ describe(`light-service object`, function () {
 
             return LightService.isUser(db, "510295233cd1919aa43736c145e077a4")
                 .then(actual => {
-                    expect(actual[0].valid).to.be.string("1")
+                    expect(actual[0].valid).to.be.string("t")
                 }).done()
         })
     })

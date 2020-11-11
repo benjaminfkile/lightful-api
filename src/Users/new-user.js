@@ -21,8 +21,8 @@ newUserRouter
           newUser.email = req.body.email
           newUser.pass = bcrypt.hashSync(req.body.pass, saltRounds);
           newUser.code = bcrypt.hashSync(valCode, saltRounds);
-          newUser.valid = 0
-          newUser.perms = 0
+          newUser.valid = "f"
+          newUser.ban = "f"
           newUser.id = crypto.randomBytes(16).toString('hex');
           res.status(200).send('user added');
           userService.insertUser(knexInstance, newUser)

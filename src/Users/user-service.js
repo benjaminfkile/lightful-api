@@ -42,7 +42,7 @@ const service = {
             data: {
                 name: name,
                 email: email,
-                message: 'please enter this code into the field to reset your password\n' + code
+                message: 'please copy this code into the field to reset your password\n\n' + code
             }
         })
 
@@ -66,15 +66,15 @@ const service = {
     toggleValid(knex, email) {
         knex.select('email').from('users')
             .where({ email: email })
-            .update({ valid: '1' })
+            .update({ valid: 't' })
             .then(rows => {
                 return rows[0]
             })
     },
-    toggleInvalid(knex, email) {
+    banUser(knex, email) {
         knex.select('email').from('users')
             .where({ email: email })
-            .update({ valid: '0' })
+            .update({ ban: 't' })
             .then(rows => {
                 return rows[0]
             })

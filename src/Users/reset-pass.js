@@ -13,7 +13,6 @@ resetRouter
         if (req.body.email && req.body.email !== "") {
             const knexInstance = req.app.get('db')
             const email = req.body.email
-            userService.toggleInvalid(knexInstance, email)
             userService.getUserByEmail(knexInstance, email)
                 .then(user => {
                     const resetCode = crypto.randomBytes(16).toString('hex');
