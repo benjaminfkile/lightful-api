@@ -62,6 +62,9 @@ statRouter
   .post(jsonParser, (req, res, next) => {
     const knexInstance = req.app.get('db')
     upvoteService.castTrip(knexInstance, req.body.id, req.body.ip)
+    return res.status(200).json({
+      success: { message: 'vote dropped' }
+    })
   })
 
 module.exports = statRouter

@@ -30,6 +30,7 @@ resetRouter
     .route('/update')
     .post(jsonParser, (req, res, next) => {
         const knexInstance = req.app.get('db')
+        console.log(req.body)
         userService.getUserByEmail(knexInstance, req.body.email
         ).then(user => {
             if (user) {
