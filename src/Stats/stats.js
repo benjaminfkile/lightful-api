@@ -63,7 +63,7 @@ statRouter
     const knexInstance = req.app.get('db')
     upvoteService.castTrip(knexInstance, req.body.id, req.body.ip)
     return res.status(200).json({
-      success: { message: 'vote dropped' }
+      success: { message: 'trip cast' }
     })
   })
 
