@@ -7,7 +7,7 @@ const service = {
     latMin = parseFloat(coords[0]) - parseInt(coords[2])
     lngMax = parseFloat(coords[1]) + parseInt(coords[2])
     lngMin = parseFloat(coords[1]) - parseInt(coords[2])
-    return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes', 'on')
+    return knex.from('lights').select('lat', 'lng', 'url', 'id', 'upvotes', 'on', 'icon')
       .where('lat', '>', latMin)
       .where('lat', '<', latMax)
       .where('lng', '<', lngMin)
