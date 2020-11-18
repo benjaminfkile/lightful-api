@@ -34,9 +34,6 @@ lightRouter
                     newLight.url = res.data.data.display_url
                     newLight.del = res.data.data.delete_url
                     LightService.insertLight(req.app.get('db'), newLight)
-                    .then(res => {
-                      return res.status
-                    })
                   }).catch(function (error) {
                     return res.status(400).json({
                       error: { message: 'no response from sight engine' }
