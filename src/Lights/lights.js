@@ -20,8 +20,8 @@ lightRouter
   })
   .post(jsonParser, async (req, res, next) => {
     const knexInstance = req.app.get('db')
-    const { lat, lng, url, id, user, pass, del, upvotes, trips, uploaded, on } = req.body
-    let newLight = { lat, lng, url, id, user, del, upvotes, trips, uploaded, on }
+    const { lat, lng, url, id, user, pass, del, upvotes, trips, uploaded, on, dummy, pin } = req.body
+    let newLight = { lat, lng, url, id, user, del, upvotes, trips, uploaded, on, dummy, pin }
     LightService.isUser(knexInstance, newLight.user)
       .then(user => {
         bcrypt.compare(pass, user[0].pass, function (err, result) {
