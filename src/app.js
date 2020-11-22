@@ -31,7 +31,7 @@ app.use('/api/users/valCode', validateCode)
 app.use('/api/users/resetPass', resetPass)
 app.use('/api/users', getUser)
 app.use('/api/places', places)
-app.use('/http://agile-wildwood-40014.herokuapp.com/loaderio-4f8dc8d17230800decfb7f2218721bc6/', loadTest)
+app.use('/loaderio-4f8dc8d17230800decfb7f2218721bc6/', loadTest)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
