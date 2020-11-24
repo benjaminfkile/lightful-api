@@ -1,3 +1,4 @@
+
 const express = require('express')
 const axios = require('axios').default;
 const crypto = require("crypto");
@@ -24,6 +25,7 @@ lightRouter
             temp.push(Lights[i])
           }
         }
+        Lights.length = 0
         res.json(temp)
       })
       .catch(next)
