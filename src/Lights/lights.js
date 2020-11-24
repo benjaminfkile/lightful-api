@@ -13,20 +13,9 @@ lightRouter
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
     const coords = req.params.coords.split(',')
-    LightService.getAllLights(knexInstance)
+    LightService.getAllLights(knexInstance, coords)
       .then(Lights => {
-        let temp = []
-        latMax = parseFloat(coords[0]) + parseInt(coords[2])//redeploy
-        latMin = parseFloat(coords[0]) - parseInt(coords[2])
-        lngMax = parseFloat(coords[1]) + parseInt(coords[2])
-        lngMin = parseFloat(coords[1]) - parseInt(coords[2])
-        for(let i = 0; i < Lights.length; i++){
-          if((Lights[i].lat < latMax) && (Lights[i].lat > latMin) && (Lights[i].lng < lngMax) && (Lights[i].lng > lngMin)){
-            temp.push(Lights[i])
-          }
-        }
-        Lights.length = 0
-        res.json(temp)
+        res.json(Lights)
       })
       .catch(next)
   })
