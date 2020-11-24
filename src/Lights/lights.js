@@ -15,7 +15,7 @@ lightRouter
     LightService.getAllLights(knexInstance)
       .then(Lights => {
         let temp = []
-        latMax = parseFloat(coords[0]) + parseInt(coords[2])
+        latMax = parseFloat(coords[0]) + parseInt(coords[2])//redeploy
         latMin = parseFloat(coords[0]) - parseInt(coords[2])
         lngMax = parseFloat(coords[1]) + parseInt(coords[2])
         lngMin = parseFloat(coords[1]) - parseInt(coords[2])
