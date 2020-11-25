@@ -34,13 +34,13 @@ lightRouter
                   .then(res => {
                     newLight.url = res.data.data.display_url
                     newLight.del = res.data.data.delete_url
+                    LightService.insertLight(req.app.get('db'), newLight)
+                    LightService.sendDecisionMail(knexInstance, newLight.user, decision)
                   }).catch(function (error) {
                     return res.status(400).json({
                       error: { message: 'no response from sight engine' }
                     })
                   });
-                  LightService.insertLight(req.app.get('db'), newLight)
-                  LightService.sendDecisionMail(knexInstance, newLight.user, decision)
                   return res.status(200).json({
                     error: { message: 'image passed review' }
                   })
