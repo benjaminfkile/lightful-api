@@ -135,10 +135,10 @@ const service = {
     //   decision.noAccentOtherColors = 'Photo contains less than 2 Accent colors or Other colors',
     //     decision.denied = true
     // }
-    // if (result.text.has_artificial > .01) {
-    //   decision.text0 = 'Found artificial text',
-    //     decision.denied = true
-    // }
+    if (result.text.has_artificial > .01) {
+      decision.text0 = 'Found artificial text',
+        decision.denied = true
+    }
     if (result.text.profanity.length > .0) {
       decision.text1 = 'Found profane text',
         decision.denied = true
