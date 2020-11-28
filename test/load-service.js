@@ -1,8 +1,8 @@
-const loaderIoToken = 'loaderio-4f8dc8d17230800decfb7f2218721bc6'
+const loaderIoToken = 'loaderio-2aa50da43d3c2dc1193ac584e52d7cff'
 
 const service = {
     getToken(){
-        return loaderIoToken
+        return loaderIoToken + '/'
     }
 }
 
