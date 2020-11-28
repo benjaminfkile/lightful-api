@@ -31,7 +31,7 @@ app.use('/api/users/valCode', validateCode)
 app.use('/api/users/resetPass', resetPass)
 app.use('/api/users', getUser)
 app.use('/api/places', places)
-app.use('/loaderio-2aa50da43d3c2dc1193ac584e52d7cff/')
+app.use('/loaderio-2aa50da43d3c2dc1193ac584e52d7cff/', loadTest)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
