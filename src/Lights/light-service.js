@@ -80,15 +80,15 @@ const service = {
   },
   auditLight(result) {
     let decision = { denied: false }
-    if (result.weapon > .6) {
+    if (result.weapon > .1) {
       decision.weapon = 'Found weapon',
         decision.denied = true
     }
-    if (result.alcohol > .6) {
+    if (result.alcohol > .1) {
       decision.alcohol = 'Found alcohol',
         decision.denied = true
     }
-    if (result.drugs > .3) {
+    if (result.drugs > .1) {
       decision.drugs = 'Found drugs',
         decision.denied = true
     }
