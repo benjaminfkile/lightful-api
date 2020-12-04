@@ -57,12 +57,13 @@ const service = {
       if (!decision.denied) {
         message += 'Congratulations ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + '!\n\nYour display passed review!!!\n\nYou should be able to see it on LightMaps as soon as you come back to the site or refresh the page.\n\nThank you for your contribution!!!\n\nben@lightmaps'
       } else {
-        message += 'Sorry ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ', your image did not pass review.\nHere is why:'
+        message += 'Sorry ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ', your image did not pass review.\n\nHere is why,'
         for (const property in decision) {
           if (decision[property] !== false && decision[property] !== true) {
-            message += '\n*' + decision[property] + '.\nThe purpose of the 406Lights image moderation AI is to ensure the content posted on the platform is pure and related to Christmas displays only.\n\nImage moderation is not always accurate,  I apologize if the decision is wrong.  I encourage you to reply to this email with your photo and address, if it is appropriate I will manually add it to the 406Lights platform.\n\nBest,\n\nBen @406Lights'
+            message += '\n' + decision[property] + '!'
           }
         }
+        message += '.\n\nThe purpose of the 406Lights image moderation AI is to ensure the content posted on the platform is pure and related to Christmas displays only.\n\nImage moderation is not always accurate,  I apologize if the decision is wrong.  I encourage you to reply to this email with your photo and address, if it is appropriate I will manually add it to the 406Lights platform.\n\nBest,\n\nBen @406Lights'
       }
       knex.select('email').from('users').where('id', id).then(email => {
         axios({
