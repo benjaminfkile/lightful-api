@@ -60,7 +60,7 @@ const service = {
         message += 'Sorry ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ', your image did not pass review.\nHere is why:'
         for (const property in decision) {
           if (decision[property] !== false && decision[property] !== true) {
-            message += '\n*' + decision[property] + '.'
+            message += '\n*' + decision[property] + '.\nThe purpose of the 406Lights image moderation AI is to ensure the content posted on the platform is pure and related to Christmas displays only.\n\nImage moderation is not always accurate,  I apologize if the decision is wrong.  I encourage you to reply to this email with your photo and address, if it is appropriate I will manually add it to the 406Lights platform.\n\nBest,\n\nBen @406Lights'
           }
         }
       }
@@ -136,10 +136,10 @@ const service = {
     //   decision.noAccentOtherColors = 'Photo contains less than 2 Accent colors or Other colors',
     //     decision.denied = true
     // }
-    if (result.text.has_artificial > .01) {
-      decision.text0 = 'Found artificial text',
-        decision.denied = true
-    }
+    // if (result.text.has_artificial > .01) {
+    //   decision.text0 = 'Found artificial text',
+    //     decision.denied = true
+    // }
     if (result.text.profanity.length > .0) {
       decision.text1 = 'Found profane text',
         decision.denied = true
@@ -154,7 +154,7 @@ const service = {
     }
     if (result.offensive.prob > .3) {
       if (result.offensive.boxes[0].label !== 'confederate') {
-        decision.offensive = 'Found offensive material realting to: ' + result.offensive.boxes[0].label
+        decision.offensive = 'Found offensive material relating to: ' + result.offensive.boxes[0].label
         decision.denied = true
       }
     }
