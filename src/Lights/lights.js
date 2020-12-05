@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const bcrypt = require('bcrypt');
 const LightService = require('./light-service');
 const lightRouter = express.Router()
-var sightengine = require('sightengine')('477213476', 'YzZjWWct2aB8jdtKh82C');
+var sightengine = require('sightengine')('890439222','STxxCYoaKFaeMAXf9uN3');
 const jsonParser = express.json()
 
 lightRouter
