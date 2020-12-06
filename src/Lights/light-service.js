@@ -81,23 +81,23 @@ const service = {
   },
   auditLight(result) {
     let decision = { denied: false }
-    if (result.weapon > .1) {
+    if (result.weapon > .5) {
       decision.weapon = 'Found weapon',
         decision.denied = true
     }
-    if (result.alcohol > .1) {
+    if (result.alcohol > .5) {
       decision.alcohol = 'Found alcohol',
         decision.denied = true
     }
-    if (result.drugs > .1) {
+    if (result.drugs > .5) {
       decision.drugs = 'Found drugs',
         decision.denied = true
     }
-    if (result.nudity.raw > .1) {
+    if (result.nudity.raw > .2) {
       decision.nudity1 = 'Found nudity',
         decision.denied = true
     }
-    if (result.nudity.partial > .1) {
+    if (result.nudity.partial > .3) {
       decision.nudity2 = 'Found nudity',
         decision.denied = true
     }
@@ -141,7 +141,7 @@ const service = {
     //   decision.text0 = 'Found artificial text',
     //     decision.denied = true
     // }
-    if (result.text.profanity.length > .0) {
+    if (result.text.profanity.length > 0) {
       decision.text1 = 'Found profane text',
         decision.denied = true
     }
@@ -153,7 +153,7 @@ const service = {
       decision.text3 = 'Found links',
         decision.denied = true
     }
-    if (result.offensive.prob > .3) {
+    if (result.offensive.prob > .5) {
       if (result.offensive.boxes[0].label !== 'confederate') {
         decision.offensive = 'Found offensive material relating to: ' + result.offensive.boxes[0].label
         decision.denied = true
