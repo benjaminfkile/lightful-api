@@ -12,6 +12,7 @@ const validateUser = require('./Users/validate-user')
 const validateCode = require('./Users/validate-code')
 const resetPass = require('./Users/reset-pass')
 const places = require('./Places/places')
+const about = require('./About/about')
 const loadTest = require('../test/load-test')
 const app = express()
 
@@ -22,6 +23,7 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
 app.use(cors())
 app.use(helmet())
 
+app.use('/' , about)
 app.use('/api/lights', lights)
 app.use('/api/lights/contributor', lights)
 app.use('/api/stats', stats)

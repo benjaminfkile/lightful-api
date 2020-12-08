@@ -94,11 +94,11 @@ const service = {
         decision.denied = true
     }
     if (result.nudity.raw > .2) {
-      decision.nudity1 = 'Found nudity',
+      decision.nudity1 = 'Found raw nudity',
         decision.denied = true
     }
     if (result.nudity.partial > .3) {
-      decision.nudity2 = 'Found nudity',
+      decision.nudity2 = 'Found partial nudity',
         decision.denied = true
     }
     if (result.faces.length > 0) {
