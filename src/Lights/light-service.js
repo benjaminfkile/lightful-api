@@ -55,7 +55,7 @@ const service = {
     let message = ''
     knex.select('name').from('users').where('id', id).then(user => {
       if (!decision.denied) {
-        message += 'Congratulations ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + '!\n\nYour display passed review!!!\n\nYou should be able to see it on LightMaps as soon as you come back to the site or refresh the page.\n\nThank you for your contribution!!!\n\nben@lightmaps'
+        message += 'Congratulations ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + '!\n\nYour display passed review!!!\n\nYou should be able to see it on 406lights.com as soon as you come back to the site or refresh the page.\nThank you for your contribution!!!\n\nben@406Lights'
       } else {
         message += 'Sorry ' + user[0].name.charAt(0).toUpperCase() + user[0].name.slice(1) + ', your image did not pass review.\n\nHere is why: '
         for (const property in decision) {
