@@ -27,7 +27,7 @@ lightRouter
       .then(user => {
         bcrypt.compare(pass, user[0].pass, function (err, result) {
           if (result) {
-            sightengine.check(['nudity', 'wad', 'properties', 'offensive', 'faces', 'text-content', 'face-attributes', 'text']).set_url(newLight.url).then(function (result) {
+            sightengine.check(['nudity','wad','offensive','faces','text-content','face-attributes','text']).set_url(newLight.url).then(function (result) {
               let decision = LightService.auditLight(result)
               if (!decision.denied) {
                 axios.post('https://api.imgbb.com/1/upload?key=eeadc880da3384d7927fb106962183a2&name=' + crypto.randomBytes(16).toString('hex') + '&image=' + newLight.url, {})
