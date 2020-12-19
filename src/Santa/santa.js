@@ -1,14 +1,13 @@
 const express = require('express')
 const santaRouter = express.Router()
-const axios = require('axios').default;
+const santaService = require('./santa-service')
 
 santaRouter
     .route('/')
     .get((req, res, next) => {
-        axios.get('http://406santa.com/api/getinfo.php', {
-        }).then(santa => {
-            res.send(santa.data)
-        }).catch(next)
-
+        res.send(santaService.postSanta(0))
     })
+
+
+
 module.exports = santaRouter
