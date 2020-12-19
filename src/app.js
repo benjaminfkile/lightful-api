@@ -35,7 +35,7 @@ app.use('/api/users/resetPass', resetPass)
 app.use('/api/users', getUser)
 app.use('/api/places', places)
 app.use('/api/santa', santa)
-app.use('/loaderio-2aa50da43d3c2dc1193ac584e52d7cff/', loadTest)
+app.use('/loaderio-4f8dc8d17230800decfb7f2218721bc6/', loadTest)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
