@@ -23,7 +23,7 @@ const service = {
                 return rows[0]
             })
     }, getPics(knex) {
-        return knex.from('406pics').select('lat', 'lng', 'url', 'id', 'active')
+        return knex.from('406pics').select('*').where('active', '1')
     }
 }
 
