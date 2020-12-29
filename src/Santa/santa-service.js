@@ -14,6 +14,16 @@ const service = {
         santaStore.unshift('santa has left missoula')
     }, postSanta(args) {
         return santaStore[args]
+    }, postPic(knex, newLight) {
+        return knex
+            .insert(newLight)
+            .into('406pics')
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    }, getPics(knex) {
+        return knex.from('406pics').select('lat', 'lng', 'url', 'id', 'active')
     }
 }
 
