@@ -12,9 +12,9 @@ function updateSanta(){
   santaService.getSanta()
 }
 
-setInterval(function () {
-  updateSanta()
-}, 5000);
+// setInterval(function () {
+//   updateSanta()
+// }, 5000);
 
 updateSanta()
 

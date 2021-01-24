@@ -1,4 +1,4 @@
-const axios = require('axios')
+// const axios = require('axios')
 let santaStore = []
 
 const service = {
@@ -7,10 +7,10 @@ const service = {
         if (santaStore.length > 2) {
             santaStore.length = 1
         }
-        axios.get('http://406santa.com/api/getinfo.php', {
-        }).then(santa => {
-            santaStore.unshift(santa.data)
-        }).catch()
+        // axios.get('http://406santa.com/api/getinfo.php', {
+        // }).then(santa => {
+        //     santaStore.unshift(santa.data)
+        // }).catch()
         santaStore.unshift('santa has left missoula')
     }, postSanta(args) {
         return santaStore[args]
