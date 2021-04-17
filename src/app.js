@@ -40,7 +40,8 @@ app.use('/loaderio-4f8dc8d17230800decfb7f2218721bc6/', loadTest)
 app.use(function errorHandler(error, req, res, next) {
   let response
   if (NODE_ENV === 'production') {
-    response = { error: 'Server error' }
+    // response = { error: 'Server error' }
+    response = { message: error.message, error }
   } else {
     response = { message: error.message, error }
   }
