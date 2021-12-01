@@ -24,12 +24,11 @@ const service = {
     sendValidationMail(name, email, code) {
         axios({
             method: 'POST',
-            // url: 'http://localhost:3002/send/validation',
-            url: 'https://intense-ocean-22155.herokuapp.com/send/validation',
+            url: `${process.env.REACT_APP_EMAIL_API_URL}/send/validation`,
             data: {
                 name: name,
                 email: email,
-                message: 'please enter this code into the field to validate your email\n' + code
+                message: `Please follow this link to validate your email \n ${process.env.VALIDATE_URL_ORIGIN}/verify/&email=${email}&code=${code}`
             }
         })
 
@@ -37,23 +36,22 @@ const service = {
     sendResetMail(name, email, code) {
         axios({
             method: 'POST',
-            // url: 'http://localhost:3002/send/validation',
-            url: 'https://intense-ocean-22155.herokuapp.com/send/validation',
+            url: `${process.env.REACT_APP_EMAIL_API_URL}/send/validation`,
             data: {
                 name: name,
                 email: email,
-                message: 'please copy this code into the field to reset your password\n\n' + code
+                message: `Please follow this link to reset your password \n ${process.env.VALIDATE_URL_ORIGIN}/reset/&email=${email}&code=${code}`
             }
         })
 
     },
-    changePass(knex, email, pass){
+    changePass(knex, email, pass) {
         knex.select('pass').from('users')
-        .where({ email: email })
-        .update({ pass: pass })
-        .then(rows => {
-            return rows[0]
-        })
+            .where({ email: email })
+            .update({ pass: pass })
+            .then(rows => {
+                return rows[0]
+            })
     },
     changeCode(knex, id, code) {
         knex.select('id').from('users')
